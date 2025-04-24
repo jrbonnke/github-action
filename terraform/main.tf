@@ -1,6 +1,7 @@
 provider "aws" {
   region = "us-east-1"
 }
+
 resource "aws_vpc" "main" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
@@ -253,8 +254,8 @@ resource "aws_lb_listener" "app_listener" {
 # Auto Scaling Group
 resource "aws_autoscaling_group" "app_asg" {
   name                      = "app-asg"
-  desired_capacity          = 2
-  max_size                  = 3
+  desired_capacity          = 1
+  max_size                  = 1
   min_size                  = 1
   vpc_zone_identifier       = [aws_subnet.app_subnet_1.id, aws_subnet.app_subnet_2.id]
   launch_template {
