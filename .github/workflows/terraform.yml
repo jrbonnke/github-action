@@ -1,0 +1,31 @@
+name: terraform-action
+
+on:
+  push:
+    branches: [terraform]
+  workflow_dispatch:
+
+jobs:
+  terraform:
+    runs-on: ec2-host
+    defaults:
+      run:
+        working-directory: ./terraform
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+    
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.9.7  # Use the same version installed on EC2
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Plan
+      run: terraform plan -out=tfplan
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve tfplan
+    
