@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    runs-on: self-host
+    runs-on: ec2-host
     #runs-on: ubuntu-latest
 
     strategy:
