@@ -251,21 +251,48 @@ resource "aws_lb_listener" "app_listener" {
     target_group_arn = aws_lb_target_group.app_tg.arn
   }
 }
-# Auto Scaling Group
-resource "aws_autoscaling_group" "app_asg" {
-  name                      = "app-asg"
-  desired_capacity          = 1
-  max_size                  = 1
-  min_size                  = 1
-  vpc_zone_identifier       = [aws_subnet.app_subnet_1.id, aws_subnet.app_subnet_2.id]
-  launch_template {
-    id      = aws_launch_template.app_lt.id
-    version = "$Latest"
-  }
-  target_group_arns = [aws_lb_target_group.app_tg.arn]
-  tag {
-    key                 = "Name"
-    value               = "AppInstance"
-    propagate_at_launch = true
-  }
-}
+# # Auto Scaling Group
+# resource "aws_autoscaling_group" "app_asg" {
+#   name                      = "app-asg"
+#   desired_capacity          = 1
+#   max_size                  = 1
+#   min_size                  = 1
+#   vpc_zone_identifier       = [aws_subnet.app_subnet_1.id, aws_subnet.app_subnet_2.id]
+#   launch_template {
+#     id      = aws_launch_template.app_lt.id
+#     version = "$Latest"
+#   }
+#   target_group_arns = [aws_lb_target_group.app_tg.arn]
+#   tag {
+#     key                 = "Name"
+#     value               = "AppInstance"
+#     propagate_at_launch = true
+#   }
+# }
+
+# resource "aws_instance" "app_instance" {
+#   ami                    = "ami-0e449927258d45bc4"
+#   instance_type          = "t2.micro"
+#   subnet_id              = aws_subnet.app_subnet_1.id
+#   vpc_security_group_ids = [aws_security_group.app_sg.id]
+#   key_name               = "redhat"
+#   user_data = base64encode(<<EOF
+# #!/bin/bash
+# yum update -y
+# yum install -y httpd
+# echo "Hello from \$(hostname)" > /var/www/html/index.html
+# systemctl start httpd
+# systemctl enable httpd
+# EOF
+#   )
+#   tags = {
+#     Name = "AppInstance"
+#   }
+# }
+
+# resource "aws_lb_target_group_attachment" "app_instance_attachment" {
+#   target_group_arn = aws_lb_target_group.app_tg.arn
+#   target_id        = aws_instance.app_instance.id
+#   port             = 80
+# }
+
