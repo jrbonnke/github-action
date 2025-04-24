@@ -8,9 +8,9 @@ on:
 jobs:
   terraform:
     runs-on: ec2-host
-    # defaults:
-    #   run:
-    #     working-directory: terraform
+    defaults:
+      run:
+        working-directory: /opt/actions-runner/_work/github-action/github-action
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
