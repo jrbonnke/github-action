@@ -58,6 +58,16 @@ resource "aws_subnet" "db_subnet_1" {
     Name = "db-subnet-1a"
   }
 }
+
+resource "aws_subnet" "dbnew_subnet_1" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.5.0/28"
+  availability_zone = "us-east-1a"
+  tags = {
+    Name = "dbnew-subnet-1a"
+  }
+}
+
 resource "aws_subnet" "db_subnet_2" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.5.0/28"
