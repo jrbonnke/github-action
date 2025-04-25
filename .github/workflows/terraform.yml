@@ -20,12 +20,15 @@ jobs:
       with:
         terraform_version: 1.9.7  # Use the same version installed on EC2
 
-    - name: Terraform Init
-      run: terraform init
+    # - name: Terraform Init
+    #   run: terraform init
 
-    - name: Terraform Plan
-      run: terraform plan -out=tfplan
+    # - name: Terraform Plan
+    #   run: terraform plan -out=tfplan
 
-    - name: Terraform Apply
-      run: terraform apply -auto-approve tfplan
+    # - name: Terraform Apply
+    #   run: terraform apply -auto-approve tfplan
+    - name: Terraform Destroy
+      run: terraform destroy -auto-approve
     
+   
