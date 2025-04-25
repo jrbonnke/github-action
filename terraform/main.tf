@@ -150,16 +150,16 @@ resource "aws_security_group" "bastion_sg" {
     Name = "bastion-sg"
   }
 }
-resource "aws_instance" "bastion" {
-  ami                    = "ami-0e449927258d45bc4" 
-  instance_type          = "t2.micro"
-  subnet_id              = aws_subnet.public_subnet_1.id
-  vpc_security_group_ids = [aws_security_group.bastion_sg.id]
-  key_name               = "redhat"  
-  tags = {
-    Name = "Bastion-Host"
-  }
-}
+# resource "aws_instance" "bastion" {
+#   ami                    = "ami-0e449927258d45bc4" 
+#   instance_type          = "t2.micro"
+#   subnet_id              = aws_subnet.public_subnet_1.id
+#   vpc_security_group_ids = [aws_security_group.bastion_sg.id]
+#   key_name               = "redhat"  
+#   tags = {
+#     Name = "Bastion-Host"
+#   }
+# }
 resource "aws_security_group" "app_sg" {
   name   = "app-sg"
   vpc_id = aws_vpc.main.id
