@@ -1,0 +1,9 @@
+region             = "us-east-1"
+vpc_cidr           = "10.0.0.0/16"
+public_subnet_cidrs = ["10.0.0.0/28", "10.0.1.0/28"]
+app_subnet_cidrs   = ["10.0.2.0/28", "10.0.3.0/28"]
+db_subnet_cidrs    = ["10.0.4.0/28", "10.0.5.0/28"]
+availability_zones = ["us-east-1a", "us-east-1b"]
+pem_key = "redhat"        
+instance_type = "t2.micro"
+image_id = "ami-0e449927258d45bc4"
