@@ -1,5 +1,5 @@
 variable "region" {
-  description = "AWS region"
+  description = "The AWS region to deploy resources in"
   type        = string
   default     = "us-east-1"
 }
@@ -7,7 +7,6 @@ variable "region" {
 variable "vpc_cidr" {
   description = "CIDR block for the VPC"
   type        = string
-  default     = "10.0.0.0/16"
 }
 
 variable "public_subnet_cidrs" {
@@ -16,7 +15,7 @@ variable "public_subnet_cidrs" {
 }
 
 variable "app_subnet_cidrs" {
-  description = "List of app subnet CIDRs"
+  description = "List of application subnet CIDRs"
   type        = list(string)
 }
 
@@ -26,11 +25,22 @@ variable "db_subnet_cidrs" {
 }
 
 variable "availability_zones" {
-  description = "Availability zones to use"
+  description = "List of availability zones to use"
   type        = list(string)
 }
 
-variable "key_name" {
-  description = "SSH key name for EC2 instances"
+variable "pem_key" {
+  description = "Key pair name for EC2"
   type        = string
+}
+
+variable "instance_type" {
+  description = "specifying the image"
+  type = string
+}
+
+variable "image_id" {
+  description = "image being used AMI"
+  type = string
+  
 }

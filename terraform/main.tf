@@ -19,7 +19,7 @@ resource "aws_internet_gateway" "igw" {
 resource "aws_subnet" "public_subnet_1" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = var.public_subnet_cidrs[0]
-  availability_zone       = "us-east-1a"
+  availability_zone       = var.availability_zones[0]
   map_public_ip_on_launch = true
   tags = {
     Name = "public-subnet-1a"
@@ -28,7 +28,7 @@ resource "aws_subnet" "public_subnet_1" {
 resource "aws_subnet" "public_subnet_2" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = var.public_subnet_cidrs[1]
-  availability_zone       = "us-east-1b"
+  availability_zone       = var.availability_zones[1]
   map_public_ip_on_launch = true
   tags = {
     Name = "public-subnet-1b"
@@ -36,42 +36,33 @@ resource "aws_subnet" "public_subnet_2" {
 }
 resource "aws_subnet" "app_subnet_1" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.2.0/28"
-  availability_zone = "us-east-1a"
+  cidr_block        = var.app_subnet_cidrs[0]
+  availability_zone = var.availability_zones[0]
   tags = {
     Name = "app-subnet-1a"
   }
 }
 resource "aws_subnet" "app_subnet_2" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.3.0/28"
-  availability_zone = "us-east-1b"
+  cidr_block        = var.app_subnet_cidrs[1]
+  availability_zone = var.availability_zones[1]
   tags = {
     Name = "app-subnet-1b"
   }
 }
 resource "aws_subnet" "db_subnet_1" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.4.0/28"
-  availability_zone = "us-east-1a"
+  cidr_block        = var.db_subnet_cidrs[0]
+  availability_zone = var.availability_zones[0]
   tags = {
     Name = "db-subnet-1a"
   }
 }
 
-resource "aws_subnet" "dbnew_subnet_1" {
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.6.0/28"
-  availability_zone = "us-east-1a"
-  tags = {
-    Name = "dbnew-subnet-1a"
-  }
-}
-
 resource "aws_subnet" "db_subnet_2" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.5.0/28"
-  availability_zone = "us-east-1b"
+  cidr_block        = var.db_subnet_cidrs[1]
+  availability_zone = var.availability_zones[1]
   tags = {
     Name = "db-subnet-1b"
   }
@@ -211,10 +202,10 @@ resource "aws_security_group" "alb_sg" {
 }
 resource "aws_launch_template" "app_lt" {
   name_prefix   = "app-lt"
-  image_id      = "ami-0e449927258d45bc4" 
-  instance_type = "t2.micro"
+  image_id      = var.image_id
+  instance_type = var.instance_type
   vpc_security_group_ids = [aws_security_group.app_sg.id]
-  key_name               = "redhat"  
+  key_name               = var.pem_key 
   user_data = base64encode(<<EOF
 #!/bin/bash
 yum update -y
