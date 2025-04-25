@@ -23,19 +23,19 @@ jobs:
     - name: Terraform Init
       run: terraform init
 
-    - name: Terraform Plan
-      run: terraform plan -out=tfplan
+    # - name: Terraform Plan
+    #   run: terraform plan -out=tfplan
     
-    - name: Log Terraform Plan
-      run: |
-        chmod +x log_to_dynamodb.sh
-        ./log_to_dynamodb.sh "plan" "success" "${{ github.actor }}" "dev" "Planned Terraform changes"
+    # - name: Log Terraform Plan
+    #   run: |
+    #     chmod +x log_to_dynamodb.sh
+    #     ./log_to_dynamodb.sh "plan" "success" "${{ github.actor }}" "dev" "Planned Terraform changes"
     
 
-    - name: Terraform Apply
-      run: terraform apply -auto-approve tfplan
-    # - name: Terraform Destroy
-    #   run: terraform destroy -auto-approve
+    # - name: Terraform Apply
+    #   run: terraform apply -auto-approve tfplan
+    - name: Terraform Destroy
+      run: terraform destroy -auto-approve
 
     - name: Log Terraform Apply
       if: success()
