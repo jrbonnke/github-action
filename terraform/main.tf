@@ -251,6 +251,24 @@ resource "aws_lb_listener" "app_listener" {
     target_group_arn = aws_lb_target_group.app_tg.arn
   }
 }
+
+resource "aws_dynamodb_table" "terraform_logs" {
+  name = "terraform-activity-logs"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key = "LogID"
+  
+  attribute {
+    name = "LogID"
+    type = "S"
+  }
+
+  tags = {
+    Environment = "shared"
+    purpose = "TerraformLogs"
+  }
+}
+
+
 # # Auto Scaling Group
 # resource "aws_autoscaling_group" "app_asg" {
 #   name                      = "app-asg"
