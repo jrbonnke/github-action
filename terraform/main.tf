@@ -252,22 +252,21 @@ resource "aws_lb_listener" "app_listener" {
   }
 }
 
-resource "aws_dynamodb_table" "terraform_logs" {
-  name = "terraform-activity-logs"
-  billing_mode = "PAY_PER_REQUEST"
-  hash_key = "LogID"
-  
+resource "aws_dynamodb_table" "terraform_locks" {
+  name           = "terraform-locks"
+  billing_mode   = "PAY_PER_REQUEST"
+  hash_key       = "LockID"
+
   attribute {
-    name = "LogID"
+    name = "LockID"
     type = "S"
   }
 
   tags = {
-    Environment = "shared"
-    purpose = "TerraformLogs"
+    Environment = "dev"
+    Name        = "Terraform Lock Table"
   }
 }
-
 
 # # Auto Scaling Group
 # resource "aws_autoscaling_group" "app_asg" {
